@@ -20,7 +20,7 @@ public class UnitOfMeasureRepositoryIT {
     private UnitOfMeasureRepository unitOfMeasureRepository;
 
     @Test
-    public void findByDescription() {
+    public void testFindByDescription() {
         String pintName = "Pint";
         String cupName = "Cup";
         Optional<UnitOfMeasure> pintOptional = unitOfMeasureRepository.findByDescription(pintName);

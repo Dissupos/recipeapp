@@ -19,7 +19,7 @@ public class CategoryRepositoryIT {
     private CategoryRepository categoryRepository;
 
     @Test
-    public void findByDescription() {
+    public void testFindByDescription() {
         String mexican = "Mexican";
         String vegan = "Vegan";
 

@@ -1,5 +1,8 @@
 package io.dissupos.recipe.services;
 
+import io.dissupos.recipe.commands.RecipeCommand;
+import io.dissupos.recipe.converters.RecipeCommandToRecipe;
+import io.dissupos.recipe.converters.RecipeToRecipeCommand;
 import io.dissupos.recipe.domain.Recipe;
 import io.dissupos.recipe.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +17,14 @@ import java.util.Set;
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
+    private final RecipeCommandToRecipe recipeCommandToRecipe;
+    private final RecipeToRecipeCommand recipeToRecipeCommand;
 
     @Autowired
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe, RecipeToRecipeCommand recipeToRecipeCommand) {
         this.recipeRepository = recipeRepository;
+        this.recipeCommandToRecipe = recipeCommandToRecipe;
+        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Override
@@ -35,5 +42,22 @@ public class RecipeServiceImpl implements RecipeService {
             throw new RuntimeException("Recipe Not Found!");
         }
         return ret.get();
+    }
+
+    @Override
+    public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
+        Recipe recipe = recipeRepository.save(recipeCommandToRecipe.convert(recipeCommand));
+        return recipeToRecipeCommand.convert(recipe);
+    }
+
+    @Override
+    public RecipeCommand findCommandById(Long id) {
+        Recipe recipe = findById(id);
+        return recipeToRecipeCommand.convert(recipe);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        recipeRepository.deleteById(id);
     }
 }
