@@ -1,7 +1,6 @@
-package io.dissupos.recipe;
+package io.dissupos.recipe.repositories;
 
 import io.dissupos.recipe.domain.UnitOfMeasure;
-import io.dissupos.recipe.repositories.UnitOfMeasureRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
